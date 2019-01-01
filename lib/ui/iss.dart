@@ -10,7 +10,10 @@ class IssLocation extends StatefulWidget {
 
 class IssLocationState extends State<IssLocation> {
 
-  String location;
+  var issLocation = {
+    'longitude' : '',
+    'latitude' : ''
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class IssLocationState extends State<IssLocation> {
           children: <Widget>[
             // title
             new Center(
-              child: new Text(location,
+              child: new Text("${issLocation['longitude']}, ${issLocation['latitude']}",
                 style: new TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.w200,
@@ -46,10 +49,11 @@ class IssLocationState extends State<IssLocation> {
   }
 
   Future<void> getLocation() async {
-    var hello = await IssService.get_location();
+    var locationResponse = await IssService.getLocation();
     setState(() {
-      location = hello.longitude + hello.latitude;
-      debugPrint(location);
+      issLocation['longitude'] = locationResponse.longitude ;
+      issLocation['latitude'] = locationResponse.latitude;
+      debugPrint("${issLocation['longitude']}, ${issLocation['latitude']}");
     });
   }
 }
